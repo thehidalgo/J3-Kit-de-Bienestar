@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Kit de Autocuidado</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&family=Lato:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        tvn: { blue: '#0c4cb4', blueDark: '#083680', teal: '#0fa1a1', coral: '#ff7a60', light: '#f8fafc', dark: '#0f172a', muted: '#475569' }
+                    },
+                    fontFamily: { poppins: ['Poppins', 'sans-serif'], lato: ['Lato', 'sans-serif'] }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { -webkit-tap-highlight-color: transparent; background-color: #0fa1a1; }
+        html, body { height: 100%; }
+        #app-main {
+            height: 100vh;
+            height: 100dvh;
+            height: var(--app-height);
+        }
+        .content-col {
+            width: 100%;
+            max-width: 30rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        @media (min-width: 768px) {
+            html { font-size: 18px; }
+            .content-col { max-width: 36rem; }
+        }
+        @media (max-width: 767px) and (max-height: 800px) {
+            #carrusel-container, #carrusel-container-2 { font-size: 0.92em; }
+        }
+        @media (max-width: 767px) and (max-height: 700px) {
+            #carrusel-container, #carrusel-container-2 { font-size: 0.84em; }
+        }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @keyframes pulseSoft { 0%, 100% { transform: scale(1); opacity: 0.5; } 50% { transform: scale(1.06); opacity: 0.9; } }
+        .pulse-soft { animation: pulseSoft 2.2s infinite ease-in-out; }
+        @keyframes iconoFlotar {
+            0%, 100% { transform: translateY(0) rotate(-3deg); }
+            50% { transform: translateY(-10px) rotate(3deg); }
+        }
+        .icono-flotante { animation: iconoFlotar 2.6s ease-in-out infinite; display: inline-block; }
+        @keyframes botonPulso {
+            0%, 100% { box-shadow: 0 0 0 0 rgba(255,255,255,0.5); }
+            50% { box-shadow: 0 0 0 6px rgba(255,255,255,0); }
+        }
+        .boton-pulso { animation: botonPulso 2s ease-in-out infinite; }
+        .boton-elegido { background-color: #0fa1a1 !important; color: #ffffff !important; transform: scale(0.95); }
+        @keyframes iconoRebote {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3) rotate(10deg); }
+        }
+        .icono-rebote { animation: iconoRebote 0.4s ease-in-out; }
+        @keyframes tarjetaEntra {
+            0% { opacity: 0; transform: translateY(12px) scale(0.96); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        .tarjeta-revelada { animation: tarjetaEntra 0.35s ease-out; }
+        @keyframes crecerPlanta {
+            0% { opacity: 0; transform: scale(0.4) translateY(20px); }
+            60% { transform: scale(1.15) translateY(-4px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        .planta-crece { animation: crecerPlanta 0.7s ease-out; }
+        @keyframes entraSuave {
+            0% { opacity: 0; transform: translateY(10px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .entra-suave { animation: entraSuave 0.4s ease-out; }
+    </style>
+</head>
+<body class="font-lato text-tvn-dark overflow-hidden">
+
+    <main id="app-main" class="w-full bg-white flex flex-col overflow-hidden relative">
+
+        <!-- ============ PANTALLA 1: PORTADA ============ -->
+        <section id="screen-portada" class="screen flex-grow flex flex-col p-6 pt-8 bg-tvn-teal text-white relative z-10 overflow-hidden">
+            <div class="absolute -bottom-20 -left-14 w-56 h-56 rounded-full bg-white/10"></div>
+            <div class="absolute -bottom-32 right-0 w-72 h-72 rounded-full bg-tvn-blue/20"></div>
+            <div class="absolute top-24 -right-10 w-28 h-28 rounded-full bg-tvn-coral/20"></div>
+
+            <div class="content-col my-auto text-center z-10 space-y-5">
+                <h2 class="text-4xl font-poppins font-extrabold leading-tight tracking-tight text-white uppercase">
+                    CUIDARNOS<br><span class="text-tvn-blue">TAMBIÉN</span><br>ES PARTE<br>DEL TRABAJO
+                </h2>
+                <div class="w-16 h-1 bg-white/40 mx-auto rounded-full"></div>
+                <p class="text-lg text-white/90 font-lato leading-relaxed px-4">
+                    Te presentamos este kit de autocuidado, creado para acompañarte a tu propio ritmo.
+                </p>
+
+                <div class="pt-4 space-y-3">
+                    <button onclick="goToScreen('screen-intro')" class="w-full bg-tvn-blue hover:bg-tvn-blueDark active:scale-[0.98] text-white font-poppins font-bold py-4 px-6 rounded-2xl shadow-lg transition-all flex justify-center items-center gap-3 group text-lg">
+                        Comenzar
+                        <i class="fa-solid fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                    </button>
+                    <p class="text-center text-base text-white/80 font-lato">
+                        Toca para explorar
+                    </p>
+                </div>
+
+                <div class="pt-2 flex justify-center">
+                    <span class="text-[9px] font-poppins font-extrabold tracking-widest text-white bg-white/15 px-2.5 py-1 rounded-full uppercase">
+                        Recursos Humanos
+                    </span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ PANTALLA 2: INTRODUCCIÓN ============ -->
+        <section id="screen-intro" class="screen flex-grow hidden flex flex-col p-6 pt-8 pb-8 bg-tvn-light text-tvn-dark z-10 relative overflow-hidden">
+            <div class="absolute -top-16 -right-16 w-52 h-52 rounded-full bg-tvn-teal/10"></div>
+            <div class="absolute -bottom-24 -left-16 w-64 h-64 rounded-full bg-tvn-coral/10"></div>
+
+            <div class="content-col z-10">
+                <button onclick="goToScreen('screen-portada')" class="self-start text-base font-semibold text-tvn-blue flex items-center gap-2 hover:underline py-2">
+                    <i class="fa-solid fa-chevron-left"></i> Atrás
+                </button>
+            </div>
+
+            <div class="content-col my-auto space-y-7 text-center z-10 px-2">
+                <p class="text-3xl font-poppins font-bold leading-snug text-tvn-dark">
+                    Tu bienestar empieza con pequeños momentos de cuidado.
+                </p>
+                <p class="text-xl text-tvn-muted leading-relaxed">
+                    Un espacio para reflexionar sobre tu bienestar y encontrar herramientas prácticas que se adapten a ti.
+                </p>
+
+                <div class="pt-4 space-y-3">
+                    <button onclick="goToScreen('screen-selection')" class="w-full bg-tvn-blue hover:bg-tvn-blueDark active:scale-[0.98] text-white font-poppins font-bold py-4 px-6 rounded-2xl shadow-md transition-all flex justify-center items-center gap-2 text-lg">
+                        Continuar
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </button>
+                    <p class="text-center text-base text-tvn-muted font-lato">
+                        Dedica unos minutos a tu bienestar.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- ============ PANTALLA 3: MENÚ ============ -->
+        <section id="screen-selection" class="screen flex-grow hidden flex flex-col bg-teal-50 text-tvn-dark relative z-10 overflow-hidden">
+            <div class="flex-grow overflow-y-auto no-scrollbar p-6 pt-10 pb-2 flex flex-col">
+                <div class="content-col text-center shrink-0">
+                    <h3 class="text-3xl font-poppins font-extrabold text-tvn-dark leading-snug">Explora tu bienestar</h3>
+                    <div class="w-14 h-1 bg-tvn-teal mx-auto rounded-full mt-3 mb-4"></div>
+                    <p class="text-lg text-tvn-muted leading-relaxed px-2">
+                        Pequeñas herramientas y recursos para ayudarte a conocer tus hábitos, comprender mejor tu bienestar y descubrir nuevas formas de cuidarte.
+                    </p>
+                    <p class="text-base font-poppins font-bold text-tvn-teal mt-5 flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-arrow-down"></i> Toca una sección para comenzar
+                    </p>
+                </div>
+
+                <div class="content-col space-y-4 my-auto py-8">
+                    <button onclick="goToScreen('screen-modulo-emocional')" class="w-full bg-tvn-blue hover:bg-tvn-blueDark text-white active:scale-[0.97] p-5 rounded-2xl text-left shadow-lg flex items-center justify-between group transition-all">
+                        <span>
+                            <span class="block font-poppins font-bold text-lg leading-snug">Comprender el estrés y el bienestar emocional</span>
+                            <span class="block text-base text-white/80 font-lato mt-1.5 leading-relaxed">Conoce qué es el estrés, cómo puede manifestarse y aprende a reconocer señales que muchas veces pasan desapercibidas.</span>
+                        </span>
+                        <span class="w-11 h-11 rounded-full bg-white/20 flex items-center justify-center shrink-0 ml-3 group-hover:bg-white/30 transition-all">
+                            <i class="fa-solid fa-arrow-right text-white text-lg group-hover:translate-x-0.5 transition-all"></i>
+                        </span>
+                    </button>
+
+                    <button onclick="goToScreen('screen-modulo-habitos')" class="w-full bg-tvn-teal hover:bg-tvn-teal/90 text-white active:scale-[0.97] p-5 rounded-2xl text-left shadow-lg flex items-center justify-between group transition-all">
+                        <span>
+                            <span class="block font-poppins font-bold text-lg leading-snug">Bienestar en tu día a día</span>
+                            <span class="block text-base text-white/80 font-lato mt-1.5 leading-relaxed">Descubre cómo el descanso, el sueño y los momentos de desconexión pueden influir en tu bienestar físico y emocional.</span>
+                        </span>
+                        <i class="fa-solid fa-arrow-right text-white/70 group-hover:translate-x-1 transition-all shrink-0 ml-3"></i>
+                    </button>
+
+                </div>
+
+                <p class="content-col text-base text-tvn-muted text-center shrink-0">
+                    Puedes recorrerlas en el orden que quieras y volver cuando lo necesites.
+                </p>
+            </div>
+
+            <div class="shrink-0 text-center py-3 border-t border-tvn-teal/10">
+                <p class="text-[12px] text-tvn-muted/70">
+                    Cuidarnos también es parte del trabajo
+                </p>
+            </div>
+        </section>
+
+        <!-- ============ MÓDULO 1: COMPRENDER EL ESTRÉS ============ -->
+        <section id="screen-modulo-emocional" class="screen flex-grow hidden flex flex-col p-6 pt-8 pb-4 bg-white text-tvn-dark z-10 overflow-hidden">
+            <div class="content-col shrink-0">
+                <button onclick="goToScreen('screen-selection')" class="self-start text-base font-semibold text-tvn-blue flex items-center gap-2 hover:underline py-2">
+                    <i class="fa-solid fa-chevron-left"></i> Volver al menú
+                </button>
+            </div>
+
+            <div class="content-col flex-grow relative overflow-hidden mt-1">
+                <div id="carrusel-container" class="w-full h-full"></div>
+            </div>
+
+            <div id="carrusel-dots" class="content-col flex justify-center gap-2 pt-4 shrink-0"></div>
+
+            <div class="content-col flex gap-3 pt-3 shrink-0">
+                <button id="btn-atras" onclick="cambiarTarjeta(-1)" class="flex-1 bg-slate-100 hover:bg-slate-200 text-tvn-dark font-poppins font-bold text-base py-4 rounded-2xl active:scale-95 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-chevron-left text-sm"></i> Atrás
+                </button>
+                <button id="btn-siguiente" onclick="cambiarTarjeta(1)" class="flex-1 bg-tvn-blue hover:bg-tvn-blueDark text-white font-poppins font-bold text-base py-4 rounded-2xl shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
+                    Siguiente <i class="fa-solid fa-chevron-right text-sm"></i>
+                </button>
+            </div>
+        </section>
+
+        <!-- ============ MÓDULO 2: BIENESTAR EN TU DÍA A DÍA ============ -->
+        <section id="screen-modulo-habitos" class="screen flex-grow hidden flex flex-col p-6 pt-8 pb-4 bg-white text-tvn-dark z-10 overflow-hidden">
+            <div class="content-col shrink-0">
+                <button onclick="goToScreen('screen-selection')" class="self-start text-base font-semibold text-tvn-blue flex items-center gap-2 hover:underline py-2">
+                    <i class="fa-solid fa-chevron-left"></i> Volver al menú
+                </button>
+            </div>
+
+            <div class="content-col flex-grow relative overflow-hidden mt-1">
+                <div id="carrusel-container-2" class="w-full h-full"></div>
+            </div>
+
+            <div id="carrusel-dots-2" class="content-col flex justify-center gap-2 pt-4 shrink-0"></div>
+
+            <div class="content-col flex gap-3 pt-3 shrink-0">
+                <button id="btn-atras-2" onclick="cambiarTarjeta(-1)" class="flex-1 bg-slate-100 hover:bg-slate-200 text-tvn-dark font-poppins font-bold text-base py-4 rounded-2xl active:scale-95 transition-all flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-chevron-left text-sm"></i> Atrás
+                </button>
+                <button id="btn-siguiente-2" onclick="cambiarTarjeta(1)" class="flex-1 bg-tvn-teal hover:bg-tvn-teal/90 text-white font-poppins font-bold text-base py-4 rounded-2xl shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
+                    Siguiente <i class="fa-solid fa-chevron-right text-sm"></i>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        function setAppHeight() {
+            document.documentElement.style.setProperty('--app-height', `${window.innerHeight}px`);
+        }
+        window.addEventListener('resize', setAppHeight);
+        window.addEventListener('orientationchange', setAppHeight);
+        setAppHeight();
+
+        const tarjetasEstres = [
+            {
+                tipo: "simple",
+                titulo: "¿Qué es el estrés?",
+                contenido: "Es una respuesta natural de nuestro cuerpo y mente ante situaciones que requieren adaptación o esfuerzo.\n\nNo siempre es negativo: a veces nos ayuda a reaccionar y responder a desafíos.",
+                color: "teal"
+            },
+            {
+                tipo: "acordeon",
+                titulo: "El estrés puede manifestarse de distintas formas",
+                intro: "No siempre se presenta como preocupación o nerviosismo. También puede reflejarse en nuestra energía, concentración o estado de ánimo.",
+                items: [
+                    { emoji: "😴", titulo: "Cansancio constante", contenido: "Sentirse cansado después de un día exigente es normal. Sin embargo, cuando la sensación de agotamiento aparece con frecuencia o persiste incluso después de descansar, puede ser una señal de que tu cuerpo o mente necesitan recuperar energía." },
+                    { emoji: "😠", titulo: "Irritabilidad", contenido: "A veces el estrés puede hacernos sentir más sensibles, impacientes o reactivos ante situaciones cotidianas. Lo que normalmente pasaría desapercibido puede generar frustración con mayor facilidad." },
+                    { emoji: "🧠", titulo: "Dificultad para concentrarse", contenido: "Cuando tenemos muchas demandas o preocupaciones, nuestra atención puede dispersarse más fácilmente. Algunas personas notan que les cuesta enfocarse, recordar información o mantener la concentración durante una tarea." }
+                ],
+                mensajeFinal: "Reconocer estas señales también es una forma de autocuidado.",
+                color: "coral"
+            },
+            {
+                tipo: "simple",
+                titulo: "Cuidarnos no significa hacerlo perfecto",
+                contenido: "El bienestar no consiste en sentirnos bien todo el tiempo. Tampoco en tener hábitos perfectos.\n\nSe trata de reconocer nuestras necesidades y buscar equilibrio.",
+                mensajeFinal: "Pequeños cambios también pueden marcar una diferencia.",
+                color: "azul"
+            },
+            {
+                tipo: "mito",
+                titulo: "Mito o realidad",
+                frase: "\"El estrés siempre es negativo.\"",
+                respuesta: "El estrés es una respuesta natural que puede ayudarnos a enfrentar desafíos. Lo importante es reconocer cuándo necesitamos recuperar equilibrio y descanso.",
+                icono: "😣",
+                color: "teal"
+            },
+            {
+                tipo: "mito",
+                titulo: "Mito o realidad",
+                frase: "\"Sentirse cansado siempre significa que necesito dormir más.\"",
+                respuesta: "El descanso es importante, pero nuestro bienestar también puede verse influido por la actividad física, los momentos de desconexión, las emociones y los hábitos diarios.",
+                icono: "😴",
+                color: "coral"
+            },
+            {
+                tipo: "mito",
+                titulo: "Mito o realidad",
+                frase: "\"Tomarme una pausa significa que soy menos productivo.\"",
+                respuesta: "Las pausas ayudan a que la mente y el cuerpo se recuperen, lo que muchas veces mejora la concentración en vez de reducirla.",
+                icono: "⏸️",
+                color: "azul"
+            }
+        ];
+
+        const tarjetasBienestar = [
+            {
+                tipo: "intro",
+                titulo: "Bienestar en tu día a día",
+                contenido: "Pequeñas acciones y momentos cotidianos pueden influir en cómo nos sentimos física y emocionalmente.",
+                color: "teal"
+            },
+            {
+                tipo: "eleccion",
+                titulo: "Cada persona descansa distinto",
+                intro: "Lo que a alguien le ayuda a soltar tensión, a otra persona puede no funcionarle.",
+                pregunta: "Cuando estás tenso, ¿qué te ayuda más?",
+                opciones: [
+                    { texto: "Moverme", detalle: "Caminar, estirarme, cambiar de espacio", respuesta: "Descargar la tensión con movimiento le funciona a muchas personas. Reconocerlo es tener una herramienta a la mano." },
+                    { texto: "Desconectar", detalle: "Silencio, estar a solas un rato", respuesta: "Bajar los estímulos ayuda a que la mente recupere claridad. Buscar ese espacio no es aislarse: es recargar." },
+                    { texto: "Hablarlo", detalle: "Compartirlo con alguien de confianza", respuesta: "Poner en palabras lo que sentimos ayuda a ordenarlo. Apoyarse en otros también es una forma de cuidarse." }
+                ],
+                color: "azul"
+            },
+            {
+                tipo: "simple",
+                titulo: "Tu cuerpo aprende de la rutina",
+                contenido: "A veces el cuerpo está listo para dormir, pero la mente sigue activa.\n\nMantener horarios similares ayuda a que tu cuerpo anticipe el descanso, aunque algunos días duermas menos que otros.",
+                mensajeFinal: "La constancia importa tanto como la cantidad.",
+                color: "coral"
+            },
+            {
+                tipo: "simple",
+                titulo: "Las pausas no son tiempo perdido",
+                contenido: "Muchas veces no tomamos pausas porque sentimos que estamos dejando de producir.\n\nPero el cansancio acumulado también afecta la calidad de lo que hacemos.",
+                mensajeFinal: "Una pausa breve puede ser más útil que forzar el ritmo.",
+                color: "azul"
+            },
+            {
+                tipo: "quiz",
+                titulo: "¿Cómo está tu bienestar hoy?",
+                color: "teal"
+            }
+        ];
+
+        const preguntasQuiz = [
+            "¿Sientes que descansas lo suficiente para empezar tu día con energía?",
+            "¿Te tomas pausas durante el día, aunque sean cortas?",
+            "¿Reconoces las señales cuando tu cuerpo o tu mente necesitan un respiro?",
+            "¿Dedicas tiempo a actividades que disfrutas fuera del trabajo?",
+            "¿Te permites descansar sin sentir que estás perdiendo el tiempo?"
+        ];
+
+        const resultadosQuiz = [
+            { min: 0, max: 1, emoji: "🌱", titulo: "Brote", mensaje: "Hay espacio para empezar. Un pequeño cambio ya es un comienzo." },
+            { min: 2, max: 3, emoji: "🌿", titulo: "Creciendo", mensaje: "Ya estás cuidando algunas áreas. Puedes seguir sumando poco a poco." },
+            { min: 4, max: 5, emoji: "🌳", titulo: "Floreciendo", mensaje: "Estás dedicando tiempo a tu bienestar. Sigue así." }
+        ];
+
+        const colores = {
+            teal: { bg: "bg-tvn-teal", ring1: "bg-white/15", ring2: "bg-tvn-blue/20", suave: "bg-tvn-teal/10", hex: "#0fa1a1" },
+            coral: { bg: "bg-tvn-coral", ring1: "bg-white/15", ring2: "bg-tvn-blueDark/15", suave: "bg-tvn-coral/10", hex: "#ff7a60" },
+            azul: { bg: "bg-tvn-blue", ring1: "bg-white/10", ring2: "bg-tvn-coral/15", suave: "bg-tvn-blue/10", hex: "#0c4cb4" }
+        };
+
+        let moduloActivo = null;
+        let indiceActual = 0;
+        let quizIndice = 0;
+        let quizPuntos = 0;
+
+        function goToScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.add('hidden'));
+            document.getElementById(screenId).classList.remove('hidden');
+
+            if (screenId === 'screen-modulo-emocional') {
+                moduloActivo = 'estres';
+                indiceActual = 0;
+                renderTarjeta();
+            } else if (screenId === 'screen-modulo-habitos') {
+                moduloActivo = 'bienestar';
+                indiceActual = 0;
+                quizIndice = 0;
+                quizPuntos = 0;
+                renderTarjeta();
+            }
+        }
+
+        function datosModulo() {
+            return moduloActivo === 'estres' ? tarjetasEstres : tarjetasBienestar;
+        }
+        function contenedorModulo() {
+            return moduloActivo === 'estres'
+                ? document.getElementById('carrusel-container')
+                : document.getElementById('carrusel-container-2');
+        }
+        function dotsModulo() {
+            return moduloActivo === 'estres'
+                ? document.getElementById('carrusel-dots')
+                : document.getElementById('carrusel-dots-2');
+        }
+
+        function cambiarTarjeta(dir) {
+            const data = datosModulo();
+            const nuevo = indiceActual + dir;
+
+            if (nuevo >= data.length) {
+                goToScreen('screen-selection');
+                return;
+            }
+            if (nuevo < 0) {
+                goToScreen('screen-selection');
+                return;
+            }
+
+            indiceActual = nuevo;
+            if (data[indiceActual].tipo === 'quiz') { quizIndice = 0; quizPuntos = 0; }
+            renderTarjeta();
+        }
+
+        function actualizarBotonesNav() {
+            const data = datosModulo();
+            const esUltima = indiceActual === data.length - 1;
+            const sufijo = moduloActivo === 'estres' ? '' : '-2';
+            const btnSig = document.getElementById('btn-siguiente' + sufijo);
+            const btnAtras = document.getElementById('btn-atras' + sufijo);
+            if (!btnSig) return;
+
+            if (esUltima) {
+                btnSig.innerHTML = 'Finalizar <i class="fa-solid fa-circle-check text-sm"></i>';
+            } else {
+                btnSig.innerHTML = 'Siguiente <i class="fa-solid fa-chevron-right text-sm"></i>';
+            }
+
+            if (indiceActual === 0) {
+                btnAtras.innerHTML = '<i class="fa-solid fa-chevron-left text-sm"></i> Menú';
+            } else {
+                btnAtras.innerHTML = '<i class="fa-solid fa-chevron-left text-sm"></i> Atrás';
+            }
+        }
+
+        function renderTarjeta() {
+            const data = datosModulo();
+            const card = data[indiceActual];
+            const c = colores[card.color] || colores.teal;
+            const cont = contenedorModulo();
+            let html = '';
+
+            const decor = `
+                <div class="absolute -top-12 -right-12 w-44 h-44 rounded-full ${c.ring1}"></div>
+                <div class="absolute -bottom-16 -left-12 w-52 h-52 rounded-full ${c.ring2}"></div>`;
+
+            if (card.tipo === 'acordeon') {
+                const items = card.items.map((item, i) => `
+                    <div class="rounded-2xl overflow-hidden bg-white shadow-md">
+                        <button onclick="toggleAcordeon(${i})" class="w-full flex items-center justify-between px-5 py-4 text-left active:bg-slate-50 transition-colors">
+                            <span class="font-poppins font-bold text-base text-tvn-dark">${item.emoji} ${item.titulo}</span>
+                            <span id="ac-icon-${i}" class="w-8 h-8 rounded-full ${c.suave} flex items-center justify-center shrink-0 ml-2 transition-transform">
+                                <i class="fa-solid fa-chevron-down text-xs" style="color:${c.hex}"></i>
+                            </span>
+                        </button>
+                        <div id="ac-body-${i}" class="hidden px-5 pb-4">
+                            <p class="text-base text-tvn-muted leading-relaxed">${item.contenido}</p>
+                        </div>
+                    </div>`).join('');
+
+                html = `
+                    <div class="w-full h-full bg-white rounded-3xl shadow-xl overflow-hidden flex flex-col">
+                        <div class="relative shrink-0 px-7 pt-8 pb-5 overflow-hidden">
+                            <div class="absolute -top-10 -right-10 w-40 h-40 rounded-full ${c.suave}"></div>
+                            <h4 class="relative z-10 text-2xl font-poppins font-extrabold text-tvn-dark leading-snug">${card.titulo}</h4>
+                            <p class="relative z-10 text-base text-tvn-muted leading-relaxed mt-3">${card.intro}</p>
+                        </div>
+                        <div class="flex-grow overflow-y-auto no-scrollbar px-6 pb-5 space-y-3">
+                            ${items}
+                            <p class="text-base text-tvn-dark font-poppins font-bold text-center pt-3">${card.mensajeFinal}</p>
+                        </div>
+                    </div>`;
+
+            } else if (card.tipo === 'mito') {
+                html = `
+                    <div class="w-full h-full ${c.bg} rounded-3xl relative overflow-hidden flex flex-col shadow-xl">
+                        ${decor}
+                        <div class="relative z-10 flex-grow overflow-y-auto no-scrollbar flex flex-col justify-center px-7 py-8 space-y-5 text-center">
+                            <h4 class="text-base font-poppins font-extrabold text-white uppercase tracking-widest flex items-center justify-center gap-2">
+                                <i class="fa-solid fa-circle-question"></i> ${card.titulo}
+                            </h4>
+                            <div id="mito-icono" class="text-7xl icono-flotante">${card.icono}</div>
+                            <p class="text-2xl font-poppins font-bold text-white leading-snug px-2">${card.frase}</p>
+                            <div id="mito-opciones" class="grid grid-cols-2 gap-4 pt-1">
+                                <button onclick="responderMito('mito')" id="btn-mito" class="bg-white/95 hover:bg-white rounded-2xl py-4 font-poppins font-bold text-lg text-tvn-dark shadow-lg active:scale-90 transition-all boton-pulso">Mito</button>
+                                <button onclick="responderMito('realidad')" id="btn-realidad" class="bg-white/95 hover:bg-white rounded-2xl py-4 font-poppins font-bold text-lg text-tvn-dark shadow-lg active:scale-90 transition-all boton-pulso">Realidad</button>
+                            </div>
+                            <div id="mito-resultado" class="hidden">
+                                <div class="bg-white/95 rounded-2xl p-5 flex gap-3 items-start text-left tarjeta-revelada">
+                                    <span class="text-3xl shrink-0">💡</span>
+                                    <p class="text-base text-tvn-dark leading-relaxed">${card.respuesta}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>`;
+
+            } else if (card.tipo === 'eleccion') {
+                const ops = card.opciones.map((o, i) => `
+                    <button onclick="elegirOpcion(${i})" class="w-full bg-white hover:bg-white text-left pl-5 pr-4 py-4 rounded-2xl shadow-xl active:scale-95 transition-all flex items-center justify-between gap-3 border-2 border-transparent hover:border-white">
+                        <span>
+                            <span class="block font-poppins font-bold text-lg text-tvn-dark">${o.texto}</span>
+                            <span class="block text-sm text-tvn-muted mt-0.5">${o.detalle}</span>
+                        </span>
+                        <span class="w-9 h-9 rounded-full flex items-center justify-center shrink-0" style="background-color:${c.hex}">
+                            <i class="fa-solid fa-chevron-right text-white text-sm"></i>
+                        </span>
+                    </button>`).join('');
+
+                html = `
+                    <div class="w-full h-full ${c.bg} rounded-3xl relative overflow-hidden flex flex-col px-7 py-8 shadow-xl">
+                        ${decor}
+                        <div class="relative z-10 flex-grow overflow-y-auto no-scrollbar space-y-5">
+                            <h4 class="text-2xl font-poppins font-extrabold text-white leading-snug">${card.titulo}</h4>
+                            <p class="text-base text-white/90 leading-relaxed">${card.intro}</p>
+                            <p class="text-xl font-poppins font-bold text-white leading-snug">${card.pregunta}</p>
+                            <div id="eleccion-ops" class="space-y-3">${ops}</div>
+                            <div id="eleccion-resp" class="hidden">
+                                <div class="bg-white/95 rounded-2xl p-5 flex gap-3 items-start tarjeta-revelada">
+                                    <span class="text-3xl shrink-0">\u{1F4A1}</span>
+                                    <p id="eleccion-texto" class="text-base text-tvn-dark leading-relaxed"></p>
+                                </div>
+                                <button onclick="reiniciarEleccion()" class="mt-3 text-base text-white/80 hover:text-white underline">
+                                    Elegir otra opción
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
+
+            } else if (card.tipo === 'quiz') {
+                html = renderQuiz(c);
+
+            } else {
+                const parrafos = card.contenido.split('\n\n').map(p =>
+                    `<p class="text-xl text-white/95 leading-relaxed">${p}</p>`).join('');
+                html = `
+                    <div class="w-full h-full ${c.bg} rounded-3xl relative overflow-hidden flex flex-col shadow-xl">
+                        ${decor}
+                        <div class="relative z-10 flex-grow overflow-y-auto no-scrollbar flex flex-col justify-center px-8 py-8">
+                            <div class="text-center space-y-5">
+                                <h4 class="text-2xl font-poppins font-extrabold text-white leading-tight">${card.titulo}</h4>
+                                <div class="w-14 h-1 bg-white/40 mx-auto rounded-full"></div>
+                                <div class="space-y-4">${parrafos}</div>
+                                ${card.mensajeFinal ? `<div class="bg-white/15 rounded-2xl px-5 py-4 mt-1"><p class="text-lg font-poppins font-bold text-white leading-snug">${card.mensajeFinal}</p></div>` : ''}
+                            </div>
+                        </div>
+                    </div>`;
+            }
+
+            cont.innerHTML = html;
+
+            const dots = dotsModulo();
+            dots.innerHTML = data.map((_, i) =>
+                `<span class="h-2 rounded-full transition-all ${i === indiceActual ? 'bg-tvn-blue w-6' : 'bg-slate-200 w-2'}"></span>`
+            ).join('');
+
+            actualizarBotonesNav();
+        }
+
+        function renderQuiz(c) {
+            if (quizIndice >= preguntasQuiz.length) {
+                const r = resultadosQuiz.find(x => quizPuntos >= x.min && quizPuntos <= x.max);
+                return `
+                    <div class="w-full h-full ${c.bg} rounded-3xl relative overflow-hidden flex flex-col shadow-xl">
+                        <div class="absolute -top-12 -right-12 w-44 h-44 rounded-full ${c.ring1}"></div>
+                        <div class="absolute -bottom-16 -left-12 w-52 h-52 rounded-full ${c.ring2}"></div>
+                        <div class="relative z-10 flex-grow overflow-y-auto no-scrollbar flex flex-col justify-center px-7 py-8 text-center space-y-5">
+                            <div class="text-8xl planta-crece">${r.emoji}</div>
+                            <h4 class="text-3xl font-poppins font-extrabold text-white">${r.titulo}</h4>
+                            <div class="bg-white/95 rounded-2xl px-6 py-5 tarjeta-revelada">
+                                <p class="text-lg text-tvn-dark leading-relaxed">${r.mensaje}</p>
+                            </div>
+                            <p class="text-base text-white/80">Marcaste ${quizPuntos} de ${preguntasQuiz.length}</p>
+                            <button onclick="reiniciarQuiz()" class="bg-white/20 hover:bg-white/30 text-white font-poppins font-bold px-6 py-3 rounded-2xl transition-all active:scale-95">
+                                <i class="fa-solid fa-rotate-right mr-2"></i> Volver a empezar
+                            </button>
+                        </div>
+                    </div>`;
+            }
+
+            return `
+                <div class="w-full h-full ${c.bg} rounded-3xl relative overflow-hidden flex flex-col shadow-xl">
+                    <div class="absolute -top-12 -right-12 w-44 h-44 rounded-full ${c.ring1}"></div>
+                    <div class="absolute -bottom-16 -left-12 w-52 h-52 rounded-full ${c.ring2}"></div>
+                    <div class="relative z-10 flex-grow overflow-y-auto no-scrollbar flex flex-col justify-center px-7 py-8 space-y-6 text-center entra-suave">
+                        <div>
+                            <span class="text-sm font-poppins font-extrabold text-white/70 uppercase tracking-widest">Pregunta ${quizIndice + 1} de ${preguntasQuiz.length}</span>
+                            <div class="flex justify-center gap-1.5 mt-3">
+                                ${preguntasQuiz.map((_, i) => `<span class="h-1.5 rounded-full transition-all ${i <= quizIndice ? 'bg-white w-7' : 'bg-white/30 w-4'}"></span>`).join('')}
+                            </div>
+                        </div>
+                        <p class="text-2xl font-poppins font-bold text-white leading-snug px-2">${preguntasQuiz[quizIndice]}</p>
+                        <div class="space-y-3 pt-2">
+                            <button onclick="responderQuiz(true)" class="w-full bg-white/95 hover:bg-white text-tvn-dark font-poppins font-bold text-lg py-4 rounded-2xl shadow-lg active:scale-95 transition-all">
+                                Casi siempre
+                            </button>
+                            <button onclick="responderQuiz(false)" class="w-full bg-white/20 hover:bg-white/30 text-white font-poppins font-bold text-lg py-4 rounded-2xl border-2 border-white/40 active:scale-95 transition-all">
+                                Pocas veces
+                            </button>
+                        </div>
+                    </div>
+                </div>`;
+        }
+
+        function responderQuiz(esSi) {
+            if (esSi) quizPuntos++;
+            quizIndice++;
+            renderTarjeta();
+        }
+
+        function reiniciarQuiz() {
+            quizIndice = 0;
+            quizPuntos = 0;
+            renderTarjeta();
+        }
+
+        function elegirOpcion(i) {
+            const card = datosModulo()[indiceActual];
+            document.getElementById('eleccion-texto').innerText = card.opciones[i].respuesta;
+            document.getElementById('eleccion-ops').classList.add('hidden');
+            document.getElementById('eleccion-resp').classList.remove('hidden');
+        }
+
+        function reiniciarEleccion() {
+            document.getElementById('eleccion-ops').classList.remove('hidden');
+            document.getElementById('eleccion-resp').classList.add('hidden');
+        }
+
+        function toggleAcordeon(i) {
+            document.getElementById(`ac-body-${i}`).classList.toggle('hidden');
+            document.getElementById(`ac-icon-${i}`).classList.toggle('rotate-180');
+        }
+
+        function responderMito(elegido) {
+            const btn = document.getElementById(elegido === 'mito' ? 'btn-mito' : 'btn-realidad');
+            const icono = document.getElementById('mito-icono');
+            btn.classList.add('boton-elegido');
+            if (icono) icono.classList.add('icono-rebote');
+            setTimeout(() => {
+                document.getElementById('mito-opciones').classList.add('hidden');
+                document.getElementById('mito-resultado').classList.remove('hidden');
+            }, 220);
+        }
+    </script>
+</body>
+</html>
